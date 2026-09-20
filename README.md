@@ -15,21 +15,21 @@ Create a production build with:
 npm run build
 ```
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare Workers
 
 1. Push this repository to GitHub or GitLab.
-2. In the Cloudflare dashboard, open **Workers & Pages**, choose **Create application**, then **Pages > Connect to Git**.
+2. In the Cloudflare dashboard, open **Workers & Pages**, choose **Create application**, then **Workers > Connect to Git**.
 3. Select this repository and use these build settings:
 
-   - **Framework preset:** `Vite`
    - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
+   - **Deploy command:** `npx wrangler deploy`
+   - **Root directory:** `/`
    - **Node.js version:** `22` (or the current version supported by the project)
 
 4. Choose **Save and Deploy**.
 
-The `public/_redirects` file keeps React Router routes working when a visitor opens a nested URL directly. Cloudflare Pages copies it into the generated `dist` directory during the Vite build.
+The `wrangler.jsonc` file points the Worker at the generated `dist` directory and enables SPA fallback handling, so React Router routes work when a visitor opens a nested URL directly.
 
 ### Custom domain
 
-After the first deployment, open the project in Cloudflare Pages, choose **Custom domains**, and follow the prompts to connect the domain. Cloudflare will provision HTTPS automatically.
+After the first deployment, open the Worker in Cloudflare, choose **Settings > Domains & Routes**, and add a custom domain. Cloudflare will provision HTTPS automatically.
