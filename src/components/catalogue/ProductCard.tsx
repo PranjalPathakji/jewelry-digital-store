@@ -1,0 +1,11 @@
+import { Link } from 'react-router-dom'
+import { Box, Button, Card, CardContent, IconButton, Stack, Typography } from '@mui/material'
+import { ArrowForward, Favorite, FavoriteBorder } from '@mui/icons-material'
+import { useStore } from '../../context/useStore'
+import { money } from '../../utils/format'
+import type { Product } from '../../types'
+
+export function ProductCard({ product }: { product: Product }) {
+  const { addToCart, toggleWishlist, isWishlisted } = useStore()
+  return <Card sx={{ boxShadow: 'none', bgcolor: 'transparent' }}><Box sx={{ position: 'relative', bgcolor: '#f0eee9', overflow: 'hidden' }}><Link to={`/product/${product.slug}`}><Box component="img" src={product.image} alt={product.name} sx={{ display: 'block', width: '100%', aspectRatio: '1 / 1.12', objectFit: 'cover', transition: 'transform .5s', '&:hover': { transform: 'scale(1.04)' } }} /></Link><Box sx={{ position: 'absolute', top: 12, left: 12, bgcolor: 'white', px: 1.25, py: .5, fontSize: 11, letterSpacing: '.08em' }}>{product.tag}</Box><IconButton onClick={() => toggleWishlist(product.id)} sx={{ position: 'absolute', right: 8, top: 8, bgcolor: 'white', '&:hover': { bgcolor: 'white' } }}>{isWishlisted(product.id) ? <Favorite color="secondary" /> : <FavoriteBorder />}</IconButton></Box><CardContent sx={{ px: 0, pt: 2 }}><Stack direction="row" justifyContent="space-between" alignItems="start"><Box><Typography component={Link} to={`/product/${product.slug}`} sx={{ color: 'text.primary', textDecoration: 'none', fontWeight: 600 }}>{product.name}</Typography><Typography variant="body2" color="text.secondary" sx={{ mt: .5 }}>{product.material}</Typography></Box><Box sx={{ textAlign: 'right' }}>{product.salePrice ? <><Typography variant="body2" sx={{ textDecoration: 'line-through', color: 'text.secondary' }}>{money(product.price)}</Typography><Typography color="secondary.main" fontWeight={700}>{money(product.salePrice)}</Typography></> : <Typography fontWeight={700}>{money(product.price)}</Typography>}</Box></Stack><Button size="small" onClick={() => addToCart(product.id)} sx={{ px: 0, mt: 1.5, color: 'primary.main' }}>Add to bag <ArrowForward sx={{ fontSize: 16, ml: .5 }} /></Button></CardContent></Card>
+}
