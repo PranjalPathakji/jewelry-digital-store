@@ -21,8 +21,7 @@ npm run build
 2. In the Cloudflare dashboard, open **Workers & Pages**, choose **Create application**, then **Workers > Connect to Git**.
 3. Select this repository and use these build settings:
 
-   - **Build command:** `npm run build`
-   - **Deploy command:** `npx wrangler deploy`
+   - **Deploy command:** `npm run deploy`
    - **Root directory:** `/`
    - **Node.js version:** `22` (or the current version supported by the project)
 
